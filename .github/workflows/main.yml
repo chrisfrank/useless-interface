@@ -43,11 +43,13 @@ jobs:
           --concurrency ${{ env.MAX_CONCURRENCY }} \
           --quiet
 
-    - name: Clean old builds
+    - name: Delete old images
       run: |-
         gcloud container images list-tags gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} \
         --filter='-tags:*' \
-        --format='get(digest)'
+        --format='get(digest)' \
+        | awk '{print "gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}@" $1}' \
+        | xargs gcloud container images delete --quiet
 
   #deploy_to_fly:
     #runs-on: ubuntu-latest
