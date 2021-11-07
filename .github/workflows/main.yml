@@ -24,6 +24,7 @@ env:
   REGION: us-central1
   MAX_INSTANCE_LIMIT: 2
   MAX_CONCURRENCY: 100
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
   deploy_to_cloud_run:
