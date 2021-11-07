@@ -6,7 +6,7 @@ on:
 name: Deploy to production
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  SERVICE: cgf-prd-useless-interface
+  SERVICE: useless-interface
   REGION: us-central1
   MAX_INSTANCE_LIMIT: 2
   MAX_CONCURRENCY: 100
