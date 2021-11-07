@@ -53,5 +53,5 @@ jobs:
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
           --platform "managed" \
           --max-instances ${{ env.MAX_INSTANCE_LIMIT }} \
-          --concurrency ${{ env.MAX_CONCURRENCY }}
+          --concurrency ${{ env.MAX_CONCURRENCY }} \
           --quiet
