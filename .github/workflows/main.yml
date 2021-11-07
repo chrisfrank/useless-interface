@@ -57,6 +57,12 @@ jobs:
           --concurrency ${{ env.MAX_CONCURRENCY }} \
           --quiet
 
+    - name: Clean old builds
+      run: |-
+        gcloud container images list-tags gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} \
+        --filter='-tags:*' \
+        --format='get(digest)'
+
   deploy_to_fly:
     runs-on: ubuntu-latest
     steps:
