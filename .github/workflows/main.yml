@@ -22,6 +22,8 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cgf-prd-useless-interface
   REGION: us-central1
+  MAX_INSTANCE_LIMIT: 2
+  MAX_CONCURRENCY: 100
 
 jobs:
   deploy:
@@ -43,11 +45,13 @@ jobs:
       run: |-
         docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
-        
+
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
           --platform "managed" \
-          --quiet 
+          --max-instances ${{ env.MAX_INSTANCE_LIMIT }} \
+          --concurrency ${{ MAX_CONCURRENCY }}
+          --quiet
