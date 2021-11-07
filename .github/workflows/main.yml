@@ -25,15 +25,31 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
 
+    - name: Authorize Docker push
+      run: gcloud auth configure-docker
+
+    - name: Build and Push Container
+      run: |-
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} .
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}
+
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
-          --source . \
+          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} \
           --platform "managed" \
           --max-instances ${{ env.MAX_INSTANCE_LIMIT }} \
           --concurrency ${{ env.MAX_CONCURRENCY }} \
           --quiet
+
+    - name: Delete old images
+      run: |-
+        gcloud container images list-tags gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} \
+        --filter='-tags:*' \
+        --format='get(digest)' \
+        | awk '{print "gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}@" $1}' \
+        | xargs gcloud container images delete --quiet
 
   #deploy_to_fly:
     #runs-on: ubuntu-latest
