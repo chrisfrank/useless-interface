@@ -44,14 +44,14 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:release .
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }} .
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}
 
     - name: Deploy to Cloud Run
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
-          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
+          --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}
           --platform "managed" \
           --max-instances ${{ env.MAX_INSTANCE_LIMIT }} \
           --concurrency ${{ env.MAX_CONCURRENCY }} \
@@ -63,11 +63,11 @@ jobs:
         --filter='-tags:*' \
         --format='get(digest)'
 
-  deploy_to_fly:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: superfly/flyctl-actions@1.1
-      with:
-        args: "deploy"
+  #deploy_to_fly:
+    #runs-on: ubuntu-latest
+    #steps:
+    #- uses: actions/checkout@v2
+    #- uses: superfly/flyctl-actions@1.1
+      #with:
+        #args: "deploy"
 
