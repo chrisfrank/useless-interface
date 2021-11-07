@@ -8,6 +8,7 @@ RUN npm run build
 FROM node:16-slim
 WORKDIR /usr/src/app
 COPY package*.json ./
+COPY --from=builder /usr/src/app/build build/
 RUN npm ci --only=production
 COPY . .
 
