@@ -1,0 +1,51 @@
+{
+  "name": "useless-interface",
+  "version": "0.1.0",
+  "description": "Lovingly optimized for frustration",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon ./src/server.js",
+    "build": "NODE_ENV=production node -e \"require('./src/assets').build()\"",
+    "fix": "prettier --write src/ && eslint --fix src/",
+    "lint": "prettier --check src/ && eslint src",
+    "serve": "PORT=8080 NODE_ENV=production node ./src/server.js",
+    "test": "tap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/chrisfrank/useless-interface"
+  },
+  "keywords": [
+    "UI"
+  ],
+  "author": "Chris Frank",
+  "license": "MIT",
+  "dependencies": {
+    "clsx": "^1.1.1",
+    "compression": "^1.7.4",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "glob": "^7.2.0",
+    "goober": "^2.0.41",
+    "htm": "^3.1.0",
+    "lodash-es": "^4.17.21",
+    "preact": "^10.5.15",
+    "serve-favicon": "^2.5.0",
+    "tap": "^15.0.10"
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.12",
+    "eslint": "^7.32.0",
+    "eslint-config-preact": "^1.2.0",
+    "global-jsdom": "^8.3.0",
+    "jsdom": "^18.0.1",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1"
+  },
+  "eslintConfig": {
+    "extends": "preact"
+  },
+  "lint-staged": {
+    "src/**/*.js": "npm run lint"
+  }
+}

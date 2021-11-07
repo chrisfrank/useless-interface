@@ -1,0 +1,6 @@
+*
+!build/
+!src/
+!package.json
+!package-lock.json
+!public
