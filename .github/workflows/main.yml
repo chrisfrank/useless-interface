@@ -17,7 +17,7 @@ on:
     branches:
     - main
 
-name: Build and Deploy to Cloud Run
+name: Deploy to production
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   SERVICE: cgf-prd-useless-interface
@@ -26,7 +26,7 @@ env:
   MAX_CONCURRENCY: 100
 
 jobs:
-  deploy:
+  deploy_to_cloud_run:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -55,3 +55,12 @@ jobs:
           --max-instances ${{ env.MAX_INSTANCE_LIMIT }} \
           --concurrency ${{ env.MAX_CONCURRENCY }} \
           --quiet
+
+  deploy_to_fly:
+    run-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: superfly/flyctl-actions@1.1
+      with:
+        args: "deploy"
+
