@@ -1,6 +1,6 @@
 {
   "name": "useless-interface",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lovingly optimized for frustration",
   "main": "src/index.js",
   "scripts": {
