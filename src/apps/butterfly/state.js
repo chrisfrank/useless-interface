@@ -1,7 +1,6 @@
 import { useEffect, useReducer, useRef } from "preact/hooks";
-import { sample, shuffle } from "lodash-es";
-import { ALPHANUMERICS, MOST_FRUSTRATING_KEYS } from "./keys";
-import { dustinessMenu, handlers } from "./handlers";
+import { ALPHANUMERICS } from "./keys";
+import { handlers } from "./handlers";
 
 export function usePopstateListener(window, dispatch) {
   useEffect(() => {
@@ -26,15 +25,7 @@ export function useInitialParams(params, dispatch) {
   useEffect(() => {
     if (params.toString() !== "") return;
 
-    const stuck = shuffle(MOST_FRUSTRATING_KEYS).slice(4);
-    const nextParams = new URLSearchParams();
-    const dustiness = Object.keys(dustinessMenu).filter(Boolean).map(Number);
-
-    stuck.forEach((key) => {
-      nextParams.set(key, sample(dustiness));
-    });
-
-    dispatch({ type: "reset", params: nextParams });
+    dispatch({ type: "reset" });
   }, [params, dispatch]);
 }
 
@@ -58,7 +49,6 @@ export function useGhost(ref, ghost, dispatch) {
     const elem = ref.current;
     if (!elem || !ghost) return;
     const { key, code, target } = ghost;
-    console.log(key, code, target);
 
     if (!ALPHANUMERICS.has(code)) return;
 

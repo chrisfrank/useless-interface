@@ -37,16 +37,7 @@ export const ALPHANUMERICS = new Set([
   "KeyZ",
 ]);
 
-export const MOST_FRUSTRATING_KEYS = [
-  "KeyE",
-  "KeyA",
-  "KeyR",
-  "KeyI",
-  "KeyO",
-  "KeyT",
-  "KeyN",
-  "KeyS",
-];
+export const MOST_FRUSTRATING_KEYS = ["E", "A", "R", "I", "O", "T", "N", "S"];
 
 export const QWERTY = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],

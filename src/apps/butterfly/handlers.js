@@ -1,17 +1,21 @@
-export const dustinessMenu = {
-  "": "0.25",
-  0.25: "0.75",
-  0.75: "",
+import { sample, shuffle } from "lodash-es";
+import { MOST_FRUSTRATING_KEYS } from "./keys";
+
+export const DUSTINESS = {
+  meh: { value: 0, next: "bad" },
+  bad: { value: 0.25, next: "worse" },
+  worse: { value: 0.75, next: "meh" },
 };
 
 export const handlers = {
   keydown(state, event) {
     const keys = new Set(state.keys);
     keys.add(event.code);
+    const letter = event.code.replace("Key", "");
 
     const diceRoll = Math.random();
-    const dustiness = +(state.params.get(event.code) || 0);
-    if (dustiness >= diceRoll) {
+    const dustiness = DUSTINESS[state.params.get(letter) || "meh"];
+    if (dustiness.value >= diceRoll) {
       const misfire = Math.random() >= 0.5 ? "ghost" : "stuck";
       if (misfire === "stuck") {
         event.preventDefault();
@@ -33,19 +37,27 @@ export const handlers = {
   },
   click(state, event) {
     event.preventDefault();
-    const code = event.target.value;
+    const letter = event.target.value;
     const nextParams = new URLSearchParams(state.params);
-    const prevDustiness = nextParams.get(code) || "";
-    console.log(code, nextParams);
-    const nextDustiness = dustinessMenu[prevDustiness] || "";
-    if (nextDustiness) {
-      nextParams.set(code, nextDustiness);
+    const prevDustiness = nextParams.get(letter) || "meh";
+    const nextDustiness = DUSTINESS[prevDustiness].next;
+    const { value } = DUSTINESS[nextDustiness];
+    if (value > 0) {
+      nextParams.set(letter, nextDustiness);
     } else {
-      nextParams.delete(code);
+      nextParams.delete(letter);
     }
     return { ...state, params: nextParams };
   },
-  reset(state, event) {
-    return { ...state, params: event.params };
+  reset(state) {
+    const stuck = shuffle(MOST_FRUSTRATING_KEYS).slice(4);
+    const nextParams = new URLSearchParams();
+    const dustiness = Object.keys(DUSTINESS).filter((name) => name !== "meh");
+
+    stuck.forEach((key) => {
+      nextParams.set(key, sample(dustiness));
+    });
+
+    return { ...state, params: nextParams };
   },
 };

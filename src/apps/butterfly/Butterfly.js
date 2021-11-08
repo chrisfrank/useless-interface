@@ -4,15 +4,14 @@ import { QWERTY } from "./keys";
 import { butterflyStyles } from "./styles";
 
 function KeyButton({ letter = "", onClick, params, keys }) {
-  const code = `Key${letter}`;
-  const isPressed = keys.has(code);
-  const dustiness = params.get(code);
+  const isPressed = keys.has(`Key${letter}`);
+  const dustiness = params.get(letter);
   return html`
     <button
       className="Butterfly__Button"
       onClick=${onClick}
       disabled=${isPressed}
-      value=${code}
+      value=${letter}
       data-dustiness=${dustiness}
     >
       ${letter}
@@ -22,6 +21,10 @@ function KeyButton({ letter = "", onClick, params, keys }) {
 
 export function Butterfly() {
   const [state, dispatch, ref] = useButterfly();
+  const handleShuffle = (event) => {
+    event.preventDefault();
+    dispatch({ type: "reset" });
+  };
   return html`
     <main className=${butterflyStyles}>
       <div className="Butterfly__Laptop">
@@ -52,9 +55,14 @@ export function Butterfly() {
           )}
         </div>
       </div>
-      <footer className="Butterfly__Banner">
-        <a href="/">Butterfly ⟲</a>
-      </footer>
+      <nav className="Butterfly__Banner">
+        <a href="/">Useless Interface</a>
+        <span> › </span>
+        <span>Butterfly</span>
+        <button className="Butterfly__Shuffle" onClick=${handleShuffle}>
+          Shuffle
+        </button>
+      </nav>
     </main>
   `;
 }
