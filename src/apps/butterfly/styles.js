@@ -2,7 +2,7 @@ import { css } from "goober";
 
 export const butterflyStyles = css`
   display: flex;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   text-align: center;
   overflow-x: hidden;
@@ -83,7 +83,8 @@ export const butterflyStyles = css`
     width: 2rem;
     height: 2rem;
     line-height: 2rem;
-    border: 1px solid;
+    box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+    border: none;
     margin: 0;
     padding: 0;
     text-align: center;
