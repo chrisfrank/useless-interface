@@ -7,7 +7,7 @@ const favicon = require("serve-favicon");
 const assets = require("./assets");
 const config = require("./config");
 
-async function createApp() {
+function createApp() {
   const BASEPATH = path.join(__dirname, "apps");
   const app = express();
   app.use(favicon(path.join(__dirname, "..", "public", "favicon.png")));
@@ -29,8 +29,7 @@ async function createApp() {
   return app;
 }
 
-createApp().then((app) => {
-  app.listen(config.PORT, () => {
-    console.log(`Server up on port ${config.PORT}`);
-  });
+const app = createApp();
+app.listen(config.PORT, () => {
+  console.log(`Server up on port ${config.PORT}`);
 });

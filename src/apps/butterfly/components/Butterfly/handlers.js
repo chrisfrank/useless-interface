@@ -1,5 +1,5 @@
 import { sample, shuffle } from "lodash-es";
-import { MOST_FRUSTRATING_KEYS } from "./keys";
+import { MOST_FRUSTRATING_KEYS } from "./keys.js";
 
 export const DUSTINESS = {
   meh: { value: 0, next: "bad" },

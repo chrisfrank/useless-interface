@@ -1,7 +1,8 @@
 import { html } from "htm/preact";
-import { useButterfly } from "./state";
-import { QWERTY } from "./keys";
-import { butterflyStyles } from "./styles";
+
+import { useButterfly } from "./state.js";
+import { QWERTY } from "./keys.js";
+import { butterflyStyles } from "./styles.js";
 
 function KeyButton({ letter = "", onClick, params, keys }) {
   const isPressed = keys.has(`Key${letter}`);
@@ -26,7 +27,7 @@ export function Butterfly() {
     dispatch({ type: "reset" });
   };
   return html`
-    <main className=${butterflyStyles}>
+    <main data-testid="butterfly" className=${butterflyStyles}>
       <div className="Butterfly__Laptop">
         <textarea
           autofocus

@@ -83,8 +83,7 @@ export const butterflyStyles = css`
     width: 2rem;
     height: 2rem;
     line-height: 2rem;
-    box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.5);
-    border: none;
+    border: 1px solid;
     margin: 0;
     padding: 0;
     text-align: center;

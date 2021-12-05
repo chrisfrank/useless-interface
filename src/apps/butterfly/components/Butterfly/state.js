@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef } from "preact/hooks";
-import { ALPHANUMERICS } from "./keys";
-import { handlers } from "./handlers";
+import { ALPHANUMERICS } from "./keys.js";
+import { handlers } from "./handlers.js";
 
 export function usePopstateListener(window, dispatch) {
   useEffect(() => {
