@@ -19,7 +19,7 @@ A collection of UIs that do the wrong things well. Contributions welcome.
    exist:
 
    * `layout.html.ejs` to render your HTML template
-   * `index.js` to boostrap your client-side JS.
+   * `index.js` to boostrap your client-side JS
 
 
 ### Tech in use

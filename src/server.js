@@ -23,7 +23,10 @@ function createApp() {
   });
 
   app.get("/", (req, res) => {
-    res.send("Useless Interface");
+    const layout = path.join(BASEPATH, "home", "layout.html.ejs");
+    res.render(layout, {
+      js: `/assets/home/index.js`,
+    });
   });
 
   return app;

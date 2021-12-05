@@ -20,7 +20,7 @@ test: install
 	npm run test
 
 build: install
-	npm run build
+	rm -rf build && npm run build
 
 dockerimage: install
 	docker build . -t useless-interface
